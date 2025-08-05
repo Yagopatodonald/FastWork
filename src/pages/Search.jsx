@@ -131,11 +131,12 @@ function Search() {
         {filteredProfessionals.map((professional) => (
           <Col md={6} lg={4} key={professional.id} className="mb-4">
             <Card className="h-100">
-              <Card.Img 
-                variant="top" 
-                src={professional.image} 
-                style={{ height: '200px', objectFit: 'cover' }}
-              />
+              <div 
+                className="d-flex align-items-center justify-content-center bg-light"
+                style={{ height: '200px' }}
+              >
+                <i className="bi bi-person-circle" style={{ fontSize: '4rem', color: '#6c757d' }}></i>
+              </div>
               <Card.Body className="d-flex flex-column">
                 <Card.Title>{professional.name}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">

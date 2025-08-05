@@ -133,11 +133,12 @@ function Profile({ isAuthenticated }) {
       <Row>
         <Col md={4}>
           <Card>
-            <Card.Img 
-              variant="top" 
-              src={professional.image} 
-              style={{ height: '300px', objectFit: 'cover' }}
-            />
+            <div 
+              className="d-flex align-items-center justify-content-center bg-light"
+              style={{ height: '300px' }}
+            >
+              <i className="bi bi-person-circle" style={{ fontSize: '6rem', color: '#6c757d' }}></i>
+            </div>
             <Card.Body className="text-center">
               <Card.Title>{professional.name}</Card.Title>
               <Card.Subtitle className="mb-3 text-muted">

@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import Search from './pages/Search'
 import Profile from './pages/Profile'
 import UserProfile from './pages/UserProfile'
+import MyProfessionalProfile from './pages/MyProfessionalProfile'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/profile/:id" element={<Profile isAuthenticated={isAuthenticated} />} />
           <Route path="/user-profile" element={<UserProfile />} />
+          <Route path="/my-professional-profile" element={<MyProfessionalProfile />} />
         </Routes>
       </div>
     </Router>
