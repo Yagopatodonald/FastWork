@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Search from './pages/Search'
 import Profile from './pages/Profile'
+import UserProfile from './pages/UserProfile'
 import Navbar from './components/Navbar'
 
 function App() {
@@ -12,41 +13,20 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {isAuthenticated && <Navbar />}
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
         <Routes>
           <Route 
             path="/login" 
             element={
               isAuthenticated ? 
-              <Navigate to="/home" /> : 
+              <Navigate to="/" /> : 
               <Login setIsAuthenticated={setIsAuthenticated} />
             } 
           />
-          <Route 
-            path="/home" 
-            element={
-              isAuthenticated ? 
-              <Home /> : 
-              <Navigate to="/login" />
-            } 
-          />
-          <Route 
-            path="/search" 
-            element={
-              isAuthenticated ? 
-              <Search /> : 
-              <Navigate to="/login" />
-            } 
-          />
-          <Route 
-            path="/profile/:id" 
-            element={
-              isAuthenticated ? 
-              <Profile /> : 
-              <Navigate to="/login" />
-            } 
-          />
-          <Route path="/" element={<Navigate to="/login" />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/profile/:id" element={<Profile isAuthenticated={isAuthenticated} />} />
+          <Route path="/user-profile" element={<UserProfile />} />
         </Routes>
       </div>
     </Router>

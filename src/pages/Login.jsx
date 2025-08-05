@@ -28,6 +28,10 @@ function Login({ setIsAuthenticated }) {
     try {
       const response = await registerUser(data)
       if (response.success) {
+        // Salvar se quer se divulgar
+        if (data.wantToAdvertise) {
+          localStorage.setItem('wantToAdvertise', 'true')
+        }
         setIsAuthenticated(true)
       }
     } catch (error) {
@@ -121,6 +125,14 @@ function Login({ setIsAuthenticated }) {
                       <Form.Control.Feedback type="invalid">
                         {signupErrors.password?.message}
                       </Form.Control.Feedback>
+                    </Form.Group>
+                    
+                    <Form.Group className="mb-3">
+                      <Form.Check
+                        type="checkbox"
+                        label="Gostaria de me divulgar como profissional"
+                        {...signupRegister('wantToAdvertise')}
+                      />
                     </Form.Group>
                     
                     <Button 

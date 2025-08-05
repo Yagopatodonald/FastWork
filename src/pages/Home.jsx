@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react'
-import { Container, Row, Col, Card, Button, Badge } from 'react-bootstrap'
+import { Container, Row, Col, Card, Button, Badge, Form, InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getProfessionals } from '../services/api'
 
 function Home() {
   const [professionals, setProfessionals] = useState([])
+  const [filteredProfessionals, setFilteredProfessionals] = useState([])
   const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedRegion, setSelectedRegion] = useState('')
+  const [minEvaluations, setMinEvaluations] = useState('')
 
   useEffect(() => {
     const loadProfessionals = async () => {
       try {
         const data = await getProfessionals()
         setProfessionals(data)
+        setFilteredProfessionals(data)
       } catch (error) {
         console.error('Erro ao carregar profissionais:', error)
       }
@@ -20,6 +25,30 @@ function Home() {
 
     loadProfessionals()
   }, [])
+
+  useEffect(() => {
+    let filtered = professionals
+
+    if (searchTerm) {
+      filtered = filtered.filter(prof => 
+        prof.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        prof.profession.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        prof.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+      )
+    }
+
+    if (selectedRegion) {
+      filtered = filtered.filter(prof => 
+        prof.location.toLowerCase().includes(selectedRegion.toLowerCase())
+      )
+    }
+
+    if (minEvaluations) {
+      filtered = filtered.filter(prof => prof.evaluationCount >= parseInt(minEvaluations))
+    }
+
+    setFilteredProfessionals(filtered)
+  }, [searchTerm, selectedRegion, minEvaluations, professionals])
 
   if (loading) {
     return (
@@ -39,9 +68,58 @@ function Home() {
           </p>
         </Col>
       </Row>
+
+      <Row className="mb-4">
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Buscar profissionais</Form.Label>
+            <InputGroup>
+              <InputGroup.Text>🔍</InputGroup.Text>
+              <Form.Control
+                type="text"
+                placeholder="Nome, profissão ou habilidade..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </InputGroup>
+          </Form.Group>
+        </Col>
+        
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Região</Form.Label>
+            <Form.Select
+              value={selectedRegion}
+              onChange={(e) => setSelectedRegion(e.target.value)}
+            >
+              <option value="">Todas as regiões</option>
+              <option value="São Paulo">São Paulo</option>
+              <option value="Rio de Janeiro">Rio de Janeiro</option>
+              <option value="Belo Horizonte">Belo Horizonte</option>
+              <option value="Brasília">Brasília</option>
+              <option value="Salvador">Salvador</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+        
+        <Col md={4}>
+          <Form.Group>
+            <Form.Label>Mínimo de avaliações</Form.Label>
+            <Form.Select
+              value={minEvaluations}
+              onChange={(e) => setMinEvaluations(e.target.value)}
+            >
+              <option value="">Qualquer quantidade</option>
+              <option value="10">10+ avaliações</option>
+              <option value="25">25+ avaliações</option>
+              <option value="50">50+ avaliações</option>
+            </Form.Select>
+          </Form.Group>
+        </Col>
+      </Row>
       
       <Row>
-        {professionals.map((professional) => (
+        {filteredProfessionals.map((professional) => (
           <Col md={6} lg={4} key={professional.id} className="mb-4">
             <Card className="h-100">
               <Card.Img 
@@ -62,7 +140,6 @@ function Home() {
                   <Badge bg="warning" text="dark" className="me-2">
                     ⭐ {professional.rating}
                   </Badge>
-                  <Badge bg="success">{professional.price}</Badge>
                 </div>
                 
                 <div className="mb-3">

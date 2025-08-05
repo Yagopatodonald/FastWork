@@ -15,7 +15,24 @@ export const mockProfessionals = [
     location: 'São Paulo, SP',
     image: 'https://via.placeholder.com/150',
     description: 'Desenvolvedor com 5 anos de experiência em React e Vue.js',
-    skills: ['React', 'JavaScript', 'CSS', 'HTML']
+    skills: ['React', 'JavaScript', 'CSS', 'HTML'],
+    email: 'joao.silva@email.com',
+    phone: '(11) 99999-1111',
+    evaluationCount: 45,
+    reviews: [
+      {
+        clientName: 'Carlos Mendes',
+        rating: 5,
+        comment: 'Excelente profissional! Entregou o projeto no prazo e com qualidade excepcional.',
+        date: '15/12/2023'
+      },
+      {
+        clientName: 'Ana Paula',
+        rating: 4,
+        comment: 'Muito bom trabalho, recomendo. Apenas algumas pequenas correções foram necessárias.',
+        date: '10/12/2023'
+      }
+    ]
   },
   {
     id: 2,
@@ -26,7 +43,24 @@ export const mockProfessionals = [
     location: 'Rio de Janeiro, RJ',
     image: 'https://via.placeholder.com/150',
     description: 'Designer especializada em experiência do usuário e interfaces modernas',
-    skills: ['Figma', 'Adobe XD', 'Photoshop', 'Illustrator']
+    skills: ['Figma', 'Adobe XD', 'Photoshop', 'Illustrator'],
+    email: 'maria.santos@email.com',
+    phone: '(21) 99999-2222',
+    evaluationCount: 67,
+    reviews: [
+      {
+        clientName: 'Roberto Silva',
+        rating: 5,
+        comment: 'Design incrível! Maria entendeu perfeitamente nossa visão e criou algo além das expectativas.',
+        date: '18/12/2023'
+      },
+      {
+        clientName: 'Fernanda Costa',
+        rating: 5,
+        comment: 'Profissional muito criativa e atenciosa. O resultado final ficou perfeito!',
+        date: '12/12/2023'
+      }
+    ]
   },
   {
     id: 3,
@@ -37,7 +71,10 @@ export const mockProfessionals = [
     location: 'Belo Horizonte, MG',
     image: 'https://via.placeholder.com/150',
     description: 'Especialista em APIs REST e microserviços com Node.js',
-    skills: ['Node.js', 'Python', 'MongoDB', 'PostgreSQL']
+    skills: ['Node.js', 'Python', 'MongoDB', 'PostgreSQL'],
+    email: 'pedro.costa@email.com',
+    phone: '(31) 99999-3333',
+    evaluationCount: 32
   },
   {
     id: 4,
@@ -48,7 +85,24 @@ export const mockProfessionals = [
     location: 'São Paulo, SP',
     image: 'https://via.placeholder.com/150',
     description: 'Profissional experiente em limpeza residencial e comercial',
-    skills: ['Limpeza Geral', 'Organização', 'Produtos Ecológicos', 'Pontualidade']
+    skills: ['Limpeza Geral', 'Organização', 'Produtos Ecológicos', 'Pontualidade'],
+    email: 'ana.oliveira@email.com',
+    phone: '(11) 99999-4444',
+    evaluationCount: 89,
+    reviews: [
+      {
+        clientName: 'Marcos Pereira',
+        rating: 5,
+        comment: 'Ana é muito cuidadosa e deixa tudo impecável. Super pontual e confiável!',
+        date: '20/12/2023'
+      },
+      {
+        clientName: 'Julia Santos',
+        rating: 5,
+        comment: 'Melhor faxineira que já contratei. Muito detalhista e organizada.',
+        date: '16/12/2023'
+      }
+    ]
   },
   {
     id: 5,
@@ -59,7 +113,10 @@ export const mockProfessionals = [
     location: 'Rio de Janeiro, RJ',
     image: 'https://via.placeholder.com/150',
     description: 'Cuidadora infantil com 8 anos de experiência e curso de primeiros socorros',
-    skills: ['Cuidados Infantis', 'Primeiros Socorros', 'Atividades Lúdicas', 'Paciência']
+    skills: ['Cuidados Infantis', 'Primeiros Socorros', 'Atividades Lúdicas', 'Paciência'],
+    email: 'carla.mendes@email.com',
+    phone: '(21) 99999-5555',
+    evaluationCount: 54
   },
   {
     id: 6,
@@ -70,7 +127,10 @@ export const mockProfessionals = [
     location: 'Brasília, DF',
     image: 'https://via.placeholder.com/150',
     description: 'Eletricista residencial e predial com 10 anos de experiência',
-    skills: ['Instalações Elétricas', 'Manutenção', 'Segurança', 'Diagnóstico']
+    skills: ['Instalações Elétricas', 'Manutenção', 'Segurança', 'Diagnóstico'],
+    email: 'roberto.lima@email.com',
+    phone: '(61) 99999-6666',
+    evaluationCount: 23
   },
   {
     id: 7,
@@ -81,7 +141,10 @@ export const mockProfessionals = [
     location: 'Salvador, BA',
     image: 'https://via.placeholder.com/150',
     description: 'Chef especializada em culinária brasileira e internacional',
-    skills: ['Culinária Brasileira', 'Doces', 'Eventos', 'Higiene Alimentar']
+    skills: ['Culinária Brasileira', 'Doces', 'Eventos', 'Higiene Alimentar'],
+    email: 'fernanda.rocha@email.com',
+    phone: '(71) 99999-7777',
+    evaluationCount: 38
   },
   {
     id: 8,
@@ -92,7 +155,10 @@ export const mockProfessionals = [
     location: 'Curitiba, PR',
     image: 'https://via.placeholder.com/150',
     description: 'Paisagista e jardineiro com conhecimento em plantas ornamentais',
-    skills: ['Paisagismo', 'Poda', 'Irrigação', 'Plantas Ornamentais']
+    skills: ['Paisagismo', 'Poda', 'Irrigação', 'Plantas Ornamentais'],
+    email: 'carlos.pereira@email.com',
+    phone: '(41) 99999-8888',
+    evaluationCount: 15
   },
   {
     id: 9,
@@ -103,7 +169,10 @@ export const mockProfessionals = [
     location: 'Fortaleza, CE',
     image: 'https://via.placeholder.com/150',
     description: 'Personal trainer especializada em emagrecimento e condicionamento físico',
-    skills: ['Musculação', 'Cardio', 'Nutrição', 'Motivação']
+    skills: ['Musculação', 'Cardio', 'Nutrição', 'Motivação'],
+    email: 'juliana.alves@email.com',
+    phone: '(85) 99999-9999',
+    evaluationCount: 72
   },
   {
     id: 10,
@@ -114,7 +183,10 @@ export const mockProfessionals = [
     location: 'Porto Alegre, RS',
     image: 'https://via.placeholder.com/150',
     description: 'Encanador especializado em instalações hidráulicas e reparos',
-    skills: ['Hidráulica', 'Reparos', 'Instalações', 'Emergências']
+    skills: ['Hidráulica', 'Reparos', 'Instalações', 'Emergências'],
+    email: 'marcos.souza@email.com',
+    phone: '(51) 99999-0000',
+    evaluationCount: 28
   },
   {
     id: 11,
@@ -125,7 +197,10 @@ export const mockProfessionals = [
     location: 'Recife, PE',
     image: 'https://via.placeholder.com/150',
     description: 'Professora de matemática e física para ensino médio e vestibular',
-    skills: ['Matemática', 'Física', 'Vestibular', 'Didática']
+    skills: ['Matemática', 'Física', 'Vestibular', 'Didática'],
+    email: 'luciana.castro@email.com',
+    phone: '(81) 99999-1010',
+    evaluationCount: 95
   },
   {
     id: 12,
@@ -136,7 +211,10 @@ export const mockProfessionals = [
     location: 'Goiânia, GO',
     image: 'https://via.placeholder.com/150',
     description: 'Motorista experiente com conhecimento da cidade e direção defensiva',
-    skills: ['Direção Defensiva', 'Pontualidade', 'Conhecimento Local', 'Cortesia']
+    skills: ['Direção Defensiva', 'Pontualidade', 'Conhecimento Local', 'Cortesia'],
+    email: 'diego.martins@email.com',
+    phone: '(62) 99999-1212',
+    evaluationCount: 41
   }
 ]
 

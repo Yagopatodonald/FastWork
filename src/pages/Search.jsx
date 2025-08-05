@@ -149,7 +149,6 @@ function Search() {
                   <Badge bg="warning" text="dark" className="me-2">
                     ⭐ {professional.rating}
                   </Badge>
-                  <Badge bg="success">{professional.price}</Badge>
                 </div>
                 
                 <div className="mb-3">
