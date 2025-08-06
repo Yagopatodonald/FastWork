@@ -6,9 +6,11 @@ import { loginUser, registerUser } from '../services/api'
 function Login({ setIsAuthenticated }) {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('login')
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
   
   const { register: loginRegister, handleSubmit: handleLoginSubmit, formState: { errors: loginErrors } } = useForm()
   const { register: signupRegister, handleSubmit: handleSignupSubmit, formState: { errors: signupErrors } } = useForm()
+  const { register: forgotRegister, handleSubmit: handleForgotSubmit, formState: { errors: forgotErrors } } = useForm()
 
   const onLogin = async (data) => {
     setLoading(true)
@@ -38,6 +40,21 @@ function Login({ setIsAuthenticated }) {
       console.error('Erro no cadastro:', error)
     }
     setLoading(false)
+  }
+
+  const onForgotPassword = async (data) => {
+    setLoading(true)
+    try {
+      // Simular envio de recuperação
+      setTimeout(() => {
+        alert('Instruções de recuperação enviadas!')
+        setShowForgotPassword(false)
+        setLoading(false)
+      }, 1000)
+    } catch (error) {
+      console.error('Erro na recuperação:', error)
+      setLoading(false)
+    }
   }
 
   return (
@@ -81,10 +98,18 @@ function Login({ setIsAuthenticated }) {
                     <Button 
                       variant="primary" 
                       type="submit" 
-                      className="w-100"
+                      className="w-100 mb-2"
                       disabled={loading}
                     >
                       {loading ? 'Entrando...' : 'Entrar'}
+                    </Button>
+                    
+                    <Button 
+                      variant="link" 
+                      className="w-100 p-0"
+                      onClick={() => setShowForgotPassword(true)}
+                    >
+                      Esqueci minha senha
                     </Button>
                   </Form>
                 </Tab>
@@ -146,6 +171,42 @@ function Login({ setIsAuthenticated }) {
                   </Form>
                 </Tab>
               </Tabs>
+              
+              {showForgotPassword && (
+                <div className="mt-3">
+                  <h5>Recuperar Senha</h5>
+                  <Form onSubmit={handleForgotSubmit(onForgotPassword)}>
+                    <Form.Group className="mb-3">
+                      <Form.Label>Email ou Telefone</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Digite seu email ou telefone"
+                        {...forgotRegister('contact', { required: 'Email ou telefone é obrigatório' })}
+                        isInvalid={!!forgotErrors.contact}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {forgotErrors.contact?.message}
+                      </Form.Control.Feedback>
+                    </Form.Group>
+                    
+                    <div className="d-flex gap-2">
+                      <Button 
+                        variant="primary" 
+                        type="submit"
+                        disabled={loading}
+                      >
+                        {loading ? 'Enviando...' : 'Enviar'}
+                      </Button>
+                      <Button 
+                        variant="secondary" 
+                        onClick={() => setShowForgotPassword(false)}
+                      >
+                        Cancelar
+                      </Button>
+                    </div>
+                  </Form>
+                </div>
+              )}
             </Card.Body>
           </Card>
         </Col>

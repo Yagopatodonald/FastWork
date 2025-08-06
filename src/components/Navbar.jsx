@@ -9,7 +9,7 @@ function Navbar({ isAuthenticated, setIsAuthenticated }) {
   return (
     <BootstrapNavbar bg="primary" variant="dark" expand="lg">
       <Container>
-        <BootstrapNavbar.Brand as={Link} to="/">
+        <BootstrapNavbar.Brand as={Link} to="/" style={{marginLeft: '0'}}>
           FastWork
         </BootstrapNavbar.Brand>
         <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
