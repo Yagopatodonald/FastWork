@@ -58,9 +58,14 @@ function Login({ setIsAuthenticated }) {
   }
 
   return (
-    <Container className="d-flex align-items-center justify-content-center min-vh-100">
-      <Row className="w-100">
-        <Col md={6} lg={4} className="mx-auto">
+    <>
+      <div className="text-center py-5 bg-light">
+        <h1 className="display-4 mb-3">Bem-vindo ao FastWork</h1>
+        <p className="lead text-muted">Conecte-se com os melhores profissionais ou ofereça seus serviços</p>
+      </div>
+      <Container className="d-flex align-items-center justify-content-center" style={{minHeight: '70vh'}}>
+        <Row className="w-100">
+          <Col md={6} lg={4} className="mx-auto">
           <Card>
             <Card.Body>
               <h2 className="text-center mb-4">FastWork</h2>
@@ -212,6 +217,7 @@ function Login({ setIsAuthenticated }) {
         </Col>
       </Row>
     </Container>
+    </>
   )
 }
 
