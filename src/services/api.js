@@ -1,8 +1,17 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com', // API mock para demonstração
+  baseURL: 'http://localhost:8080/api',
 })
+
+// Interceptor para debug de erros
+api.interceptors.response.use(
+  response => response,
+  error => {
+    console.error('API Error:', error.response?.data || error.message)
+    return Promise.reject(error)
+  }
+)
 
 // Mock data para profissionais
 export const mockProfessionals = [
@@ -219,21 +228,42 @@ export const mockProfessionals = [
 ]
 
 export const loginUser = async (credentials) => {
-  // Simulação de login
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ success: true, user: { name: 'Usuário', email: credentials.email } })
-    }, 1000)
-  })
+  try {
+    const response = await api.post('/auth/login', credentials)
+    return response.data
+  } catch (error) {
+    console.error('Login error:', error)
+    // Fallback para quando backend não está disponível
+    if (error.code === 'ECONNREFUSED' || error.message.includes('Network Error')) {
+      // Simulação temporária
+      if (credentials.email === 'admin@fastwork.com' && credentials.password === '123456') {
+        return { success: true, message: 'Login realizado com sucesso (simulado)', token: 'token_admin' }
+      }
+      return { success: false, message: 'Email ou senha inválidos (simulado)' }
+    }
+    return { 
+      success: false, 
+      message: error.response?.data?.message || 'Erro ao conectar com o servidor' 
+    }
+  }
 }
 
 export const registerUser = async (userData) => {
-  // Simulação de cadastro
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({ success: true, user: { name: userData.name, email: userData.email } })
-    }, 1000)
-  })
+  try {
+    const response = await api.post('/auth/register', userData)
+    return response.data
+  } catch (error) {
+    console.error('Register error:', error)
+    // Fallback para quando backend não está disponível
+    if (error.code === 'ECONNREFUSED' || error.message.includes('Network Error')) {
+      // Simulação temporária
+      return { success: true, message: 'Cadastro realizado com sucesso (simulado)', token: 'token_user' }
+    }
+    return { 
+      success: false, 
+      message: error.response?.data?.message || 'Erro ao conectar com o servidor' 
+    }
+  }
 }
 
 export const getProfessionals = async () => {

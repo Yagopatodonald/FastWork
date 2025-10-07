@@ -7,6 +7,7 @@ function Login({ setIsAuthenticated }) {
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('login')
   const [showForgotPassword, setShowForgotPassword] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   
   const { register: loginRegister, handleSubmit: handleLoginSubmit, formState: { errors: loginErrors } } = useForm()
   const { register: signupRegister, handleSubmit: handleSignupSubmit, formState: { errors: signupErrors } } = useForm()
@@ -14,19 +15,24 @@ function Login({ setIsAuthenticated }) {
 
   const onLogin = async (data) => {
     setLoading(true)
+    setErrorMessage('')
     try {
       const response = await loginUser(data)
       if (response.success) {
         setIsAuthenticated(true)
+      } else {
+        setErrorMessage(response.message)
       }
     } catch (error) {
       console.error('Erro no login:', error)
+      setErrorMessage('Erro ao conectar com o servidor')
     }
     setLoading(false)
   }
 
   const onSignup = async (data) => {
     setLoading(true)
+    setErrorMessage('')
     try {
       const response = await registerUser(data)
       if (response.success) {
@@ -35,9 +41,12 @@ function Login({ setIsAuthenticated }) {
           localStorage.setItem('wantToAdvertise', 'true')
         }
         setIsAuthenticated(true)
+      } else {
+        setErrorMessage(response.message)
       }
     } catch (error) {
       console.error('Erro no cadastro:', error)
+      setErrorMessage('Erro ao conectar com o servidor')
     }
     setLoading(false)
   }
@@ -69,6 +78,11 @@ function Login({ setIsAuthenticated }) {
           <Card>
             <Card.Body>
               <h2 className="text-center mb-4">FastWork</h2>
+              {errorMessage && (
+                <div className="alert alert-danger" role="alert">
+                  {errorMessage}
+                </div>
+              )}
               <Tabs
                 activeKey={activeTab}
                 onSelect={(k) => setActiveTab(k)}

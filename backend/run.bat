@@ -1,0 +1,3 @@
+@echo off
+echo Iniciando FastWork Backend...
+mvn spring-boot:run

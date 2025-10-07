@@ -1,0 +1,1 @@
+-- Dados removidos pois agora usa SQL Server com ddl-auto=none
