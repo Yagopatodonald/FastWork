@@ -267,11 +267,23 @@ export const registerUser = async (userData) => {
 }
 
 export const getProfessionals = async () => {
-  return mockProfessionals
+  try {
+    const response = await api.get('/profissionais')
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar profissionais:', error)
+    return mockProfessionals // Fallback para dados mock
+  }
 }
 
 export const getProfessionalById = async (id) => {
-  return mockProfessionals.find(prof => prof.id === parseInt(id))
+  try {
+    const response = await api.get(`/profissionais/${id}`)
+    return response.data
+  } catch (error) {
+    console.error('Erro ao buscar profissional:', error)
+    return mockProfessionals.find(prof => prof.id === parseInt(id)) // Fallback
+  }
 }
 
 export const reportProfessional = async (id, reason) => {
@@ -281,6 +293,16 @@ export const reportProfessional = async (id, reason) => {
       resolve({ success: true, message: 'Denúncia enviada com sucesso' })
     }, 1000)
   })
+}
+
+export const updateProfessional = async (id, data) => {
+  try {
+    const response = await api.put(`/profissionais/${id}`, data)
+    return { success: true, data: response.data }
+  } catch (error) {
+    console.error('Erro ao atualizar profissional:', error)
+    return { success: false, message: 'Erro ao atualizar perfil' }
+  }
 }
 
 export default api

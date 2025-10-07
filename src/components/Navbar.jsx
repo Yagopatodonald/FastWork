@@ -2,7 +2,12 @@ import { Navbar as BootstrapNavbar, Nav, Container, Button, NavDropdown } from '
 import { Link } from 'react-router-dom'
 
 function Navbar({ isAuthenticated, setIsAuthenticated }) {
+  const userType = localStorage.getItem('userType')
+  
   const handleLogout = () => {
+    localStorage.removeItem('userType')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('professionalData')
     setIsAuthenticated(false)
   }
 
@@ -23,6 +28,11 @@ function Navbar({ isAuthenticated, setIsAuthenticated }) {
                   <NavDropdown.Item as={Link} to="/user-profile">
                     Meu Perfil
                   </NavDropdown.Item>
+                  {userType === 'PROFISSIONAL' && (
+                    <NavDropdown.Item as={Link} to="/my-professional-profile">
+                      Meu Perfil Profissional
+                    </NavDropdown.Item>
+                  )}
                   <NavDropdown.Divider />
                   <NavDropdown.Item onClick={handleLogout}>
                     Sair

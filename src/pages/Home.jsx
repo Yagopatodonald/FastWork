@@ -15,10 +15,13 @@ function Home() {
     const loadProfessionals = async () => {
       try {
         const data = await getProfessionals()
-        setProfessionals(data)
-        setFilteredProfessionals(data)
+        console.log('Dados recebidos:', data)
+        setProfessionals(data || [])
+        setFilteredProfessionals(data || [])
       } catch (error) {
         console.error('Erro ao carregar profissionais:', error)
+        setProfessionals([])
+        setFilteredProfessionals([])
       }
       setLoading(false)
     }
@@ -31,20 +34,19 @@ function Home() {
 
     if (searchTerm) {
       filtered = filtered.filter(prof => 
-        prof.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        prof.profession.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        prof.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+        (prof.nome || prof.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (prof.habilidades || prof.skills || '').toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
     if (selectedRegion) {
       filtered = filtered.filter(prof => 
-        prof.location.toLowerCase().includes(selectedRegion.toLowerCase())
+        (prof.regiao || prof.location || '').toLowerCase().includes(selectedRegion.toLowerCase())
       )
     }
 
     if (minEvaluations) {
-      filtered = filtered.filter(prof => prof.evaluationCount >= parseInt(minEvaluations))
+      filtered = filtered.filter(prof => (prof.numAvaliacoes || prof.evaluationCount || 0) >= parseInt(minEvaluations))
     }
 
     setFilteredProfessionals(filtered)
@@ -119,7 +121,12 @@ function Home() {
       </Row>
       
       <Row>
-        {filteredProfessionals.map((professional) => (
+        {filteredProfessionals.length === 0 ? (
+          <Col className="text-center">
+            <p className="text-muted">Nenhum profissional encontrado.</p>
+          </Col>
+        ) : (
+          filteredProfessionals.map((professional) => (
           <Col md={6} lg={4} key={professional.id} className="mb-4">
             <Card className="h-100">
               <div 
@@ -129,28 +136,31 @@ function Home() {
                 <i className="bi bi-person-circle" style={{ fontSize: '4rem', color: '#6c757d' }}></i>
               </div>
               <Card.Body className="d-flex flex-column">
-                <Card.Title>{professional.name}</Card.Title>
+                <Card.Title>{professional.nome || professional.name}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
-                  {professional.profession}
+                  Profissional
                 </Card.Subtitle>
                 <Card.Text className="flex-grow-1">
-                  {professional.description}
+                  {professional.descricao || professional.description || 'Profissional qualificado'}
                 </Card.Text>
                 
                 <div className="mb-2">
                   <Badge bg="warning" text="dark" className="me-2">
-                    ⭐ {professional.rating}
+                    ⭐ {professional.rating || '5.0'}
+                  </Badge>
+                  <Badge bg="info" text="white">
+                    {professional.numAvaliacoes || professional.evaluationCount || 0} avaliações
                   </Badge>
                 </div>
                 
                 <div className="mb-3">
-                  <small className="text-muted">📍 {professional.location}</small>
+                  <small className="text-muted">📍 {professional.regiao || professional.location}</small>
                 </div>
                 
                 <div className="mb-3">
-                  {professional.skills.slice(0, 3).map((skill, index) => (
+                  {(professional.habilidades || professional.skills || '').split(',').filter(skill => skill.trim()).slice(0, 3).map((skill, index) => (
                     <Badge key={index} bg="secondary" className="me-1 mb-1">
-                      {skill}
+                      {skill.trim()}
                     </Badge>
                   ))}
                 </div>
@@ -166,7 +176,8 @@ function Home() {
               </Card.Body>
             </Card>
           </Col>
-        ))}
+        ))
+        )}
       </Row>
     </Container>
   )

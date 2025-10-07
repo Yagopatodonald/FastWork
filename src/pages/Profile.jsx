@@ -140,19 +140,22 @@ function Profile({ isAuthenticated }) {
               <i className="bi bi-person-circle" style={{ fontSize: '6rem', color: '#6c757d' }}></i>
             </div>
             <Card.Body className="text-center">
-              <Card.Title>{professional.name}</Card.Title>
+              <Card.Title>{professional.nome || professional.name}</Card.Title>
               <Card.Subtitle className="mb-3 text-muted">
-                {professional.profession}
+                Profissional
               </Card.Subtitle>
               
               <div className="mb-3">
                 <Badge bg="warning" text="dark" className="me-2 mb-2">
-                  ⭐ {professional.rating}
+                  ⭐ {professional.rating || '5.0'}
+                </Badge>
+                <Badge bg="info" text="white">
+                  {professional.numAvaliacoes || 0} avaliações
                 </Badge>
               </div>
               
               <div className="mb-3">
-                <small className="text-muted">📍 {professional.location}</small>
+                <small className="text-muted">📍 {professional.regiao || professional.location}</small>
               </div>
               
               <Button 
@@ -192,13 +195,13 @@ function Profile({ isAuthenticated }) {
           <Card>
             <Card.Body>
               <h3>Sobre</h3>
-              <p>{professional.description}</p>
+              <p>{professional.descricao || professional.description || 'Profissional qualificado'}</p>
               
               <h4 className="mt-4">Habilidades</h4>
               <div className="mb-4">
-                {professional.skills.map((skill, index) => (
+                {(professional.habilidades || professional.skills || '').split(',').map((skill, index) => (
                   <Badge key={index} bg="secondary" className="me-2 mb-2">
-                    {skill}
+                    {skill.trim()}
                   </Badge>
                 ))}
               </div>
@@ -206,9 +209,9 @@ function Profile({ isAuthenticated }) {
               <h4>Informações de Contato</h4>
               <p>
                 <strong>Email:</strong> {professional.email}<br/>
-                <strong>Telefone:</strong> {professional.phone}<br/>
-                <strong>Localização:</strong> {professional.location}<br/>
-                <strong>Avaliação:</strong> {professional.rating}/5.0
+                <strong>Telefone:</strong> {professional.telefone || professional.phone || 'Não informado'}<br/>
+                <strong>Localização:</strong> {professional.regiao || professional.location}<br/>
+                <strong>Avaliações:</strong> {professional.numAvaliacoes || 0}
               </p>
               
               <h4 className="mt-4">Avaliações dos Clientes</h4>

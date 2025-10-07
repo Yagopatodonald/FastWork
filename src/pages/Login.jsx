@@ -8,6 +8,7 @@ function Login({ setIsAuthenticated }) {
   const [activeTab, setActiveTab] = useState('login')
   const [showForgotPassword, setShowForgotPassword] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [wantToAdvertise, setWantToAdvertise] = useState(false)
   
   const { register: loginRegister, handleSubmit: handleLoginSubmit, formState: { errors: loginErrors } } = useForm()
   const { register: signupRegister, handleSubmit: handleSignupSubmit, formState: { errors: signupErrors } } = useForm()
@@ -19,6 +20,7 @@ function Login({ setIsAuthenticated }) {
     try {
       const response = await loginUser(data)
       if (response.success) {
+        localStorage.setItem('userEmail', data.email)
         setIsAuthenticated(true)
       } else {
         setErrorMessage(response.message)
@@ -36,10 +38,23 @@ function Login({ setIsAuthenticated }) {
     try {
       const response = await registerUser(data)
       if (response.success) {
-        // Salvar se quer se divulgar
+        localStorage.setItem('userEmail', data.email)
+        
         if (data.wantToAdvertise) {
-          localStorage.setItem('wantToAdvertise', 'true')
+          localStorage.setItem('userType', 'PROFISSIONAL')
+          localStorage.setItem('professionalData', JSON.stringify({
+            nome: data.name,
+            email: data.email,
+            telefone: data.telefone || '',
+            regiao: data.regiao || '',
+            habilidades: data.habilidades || '',
+            descricao: data.descricao || '',
+            numAvaliacoes: 0
+          }))
+        } else {
+          localStorage.setItem('userType', 'VISUALIZADOR')
         }
+        
         setIsAuthenticated(true)
       } else {
         setErrorMessage(response.message)
@@ -176,8 +191,51 @@ function Login({ setIsAuthenticated }) {
                         type="checkbox"
                         label="Gostaria de me divulgar como profissional"
                         {...signupRegister('wantToAdvertise')}
+                        onChange={(e) => setWantToAdvertise(e.target.checked)}
                       />
                     </Form.Group>
+                    
+                    {/* Campos condicionais para profissionais */}
+                    {wantToAdvertise && (
+                    <div>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Região</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Ex: São Paulo, SP"
+                          {...signupRegister('regiao')}
+                        />
+                      </Form.Group>
+                      
+                      <Form.Group className="mb-3">
+                        <Form.Label>Habilidades (separadas por vírgula)</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Ex: React, JavaScript, CSS"
+                          {...signupRegister('habilidades')}
+                        />
+                      </Form.Group>
+                      
+                      <Form.Group className="mb-3">
+                        <Form.Label>Telefone</Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Ex: (11) 99999-9999"
+                          {...signupRegister('telefone')}
+                        />
+                      </Form.Group>
+                      
+                      <Form.Group className="mb-3">
+                        <Form.Label>Descrição (opcional)</Form.Label>
+                        <Form.Control
+                          as="textarea"
+                          rows={2}
+                          placeholder="Descreva seus serviços..."
+                          {...signupRegister('descricao')}
+                        />
+                      </Form.Group>
+                    </div>
+                    )}
                     
                     <Button 
                       variant="success" 

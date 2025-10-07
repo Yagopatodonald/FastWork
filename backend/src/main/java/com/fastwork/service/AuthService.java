@@ -40,9 +40,9 @@ public class AuthService {
                 profissional.setEmail(request.getEmail());
                 profissional.setSenha(request.getPassword());
                 profissional.setTelefone(request.getTelefone());
-                profissional.setRegiao(request.getRegiao() != null ? request.getRegiao() : "Não informado");
-                profissional.setHabilidades(request.getHabilidades() != null ? request.getHabilidades() : "Não informado");
-                profissional.setDescricao(request.getDescricao());
+                profissional.setRegiao(request.getRegiao() != null && !request.getRegiao().isEmpty() ? request.getRegiao() : "Não informado");
+                profissional.setHabilidades(request.getHabilidades() != null && !request.getHabilidades().isEmpty() ? request.getHabilidades() : "Não informado");
+                profissional.setDescricao(request.getDescricao() != null && !request.getDescricao().isEmpty() ? request.getDescricao() : "Profissional qualificado");
                 profissional.setNivelAcesso("PROFISSIONAL");
                 profissional.setDataCadastro(LocalDateTime.now());
                 profissional.setStatusUsuario("ATIVO");
